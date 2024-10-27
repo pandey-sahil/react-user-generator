@@ -1,7 +1,7 @@
 import React from "react";
 import UserCard from "./UserCard";
 
-const UserList = ({ users, deleteUser }) => {
+const UserList = ({ users, deleteUser, editUser }) => {
   return (
     <div className="p-7 bg-slate-100 flex flex-wrap justify-center">
       {users.length > 0 ? (
@@ -12,6 +12,7 @@ const UserList = ({ users, deleteUser }) => {
             email={user.email}
             image={user.image}
             onDelete={() => deleteUser(idx)}
+            onEdit={() => editUser(idx)}
           />
         ))
       ) : (

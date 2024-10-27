@@ -1,6 +1,6 @@
 import React from "react";
 
-const UserCard = ({ naam, email, image, onDelete }) => {
+const UserCard = ({ naam, email, image, onDelete, onEdit }) => {
   return (
     <div className="m-6 text-center px-7 py-6 bg-white shadow-lg rounded-lg w-[21%] flex flex-col items-center transition hover:shadow-xl">
       <img
@@ -13,12 +13,20 @@ const UserCard = ({ naam, email, image, onDelete }) => {
       <p className="text-sm leading-4 font-normal text-gray-700">
         Lorem ipsum dolor sit amet, consectetur adipisicing elit.
       </p>
-      <button
-        onClick={onDelete}
-        className="bg-red-500 hover:bg-red-600 text-white font-bold px-4 text-sm rounded-md mt-4 py-2 transition"
-      >
-        Remove
-      </button>
+      <div className="flex space-x-2 mt-4">
+        <button
+          onClick={onEdit}
+          className="bg-yellow-500 hover:bg-yellow-600 text-white font-bold px-4 text-sm rounded-md py-2 transition"
+        >
+          Edit
+        </button>
+        <button
+          onClick={onDelete}
+          className="bg-red-500 hover:bg-red-600 text-white font-bold px-4 text-sm rounded-md py-2 transition"
+        >
+          Remove
+        </button>
+      </div>
     </div>
   );
 };
