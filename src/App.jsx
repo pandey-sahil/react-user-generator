@@ -1,46 +1,47 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Form from "./components/Form";
 import UserList from "./components/UserList";
+import {
+  getUsersFromLocalStorage,
+  addUserToLocalStorage,
+  updateUserInLocalStorage,
+  deleteUserFromLocalStorage
+} from "./utils/localStorage"; // Import functions correctly
 
 const App = () => {
   const [users, setUsers] = useState([]);
-  const [selectedUser, setSelectedUser] = useState(null);
-  const [isEditMode, setIsEditMode] = useState(false);
-  const [editIndex, setEditIndex] = useState(null);
 
-  const submitHandler = (newUser) => {
-    setUsers([...users, newUser]);
+  // Load users from localStorage when the app starts
+  useEffect(() => {
+    const storedUsers = getUsersFromLocalStorage();
+    setUsers(storedUsers);
+  }, []);
+
+  // Add a new user
+  const addUser = (newUser) => {
+    const updatedUsers = [...users, newUser];
+    setUsers(updatedUsers);
+    addUserToLocalStorage(newUser); // Save new user to localStorage
   };
 
+  // Delete a user
   const deleteUser = (index) => {
-    const updatedUsers = [...users];
-    updatedUsers.splice(index, 1);
+    const updatedUsers = users.filter((_, i) => i !== index);
     setUsers(updatedUsers);
+    deleteUserFromLocalStorage(index); // Remove user from localStorage
   };
 
-  const editUser = (index) => {
-    setSelectedUser(users[index]);
-    setEditIndex(index);
-    setIsEditMode(true);
-  };
-
-  const updateUser = (updatedUser) => {
+  // Edit a user
+  const editUser = (index, updatedUser) => {
     const updatedUsers = [...users];
-    updatedUsers[editIndex] = updatedUser;
+    updatedUsers[index] = updatedUser;
     setUsers(updatedUsers);
-    setIsEditMode(false);
-    setSelectedUser(null);
-    setEditIndex(null);
+    updateUserInLocalStorage(updatedUser, index); // Update user in localStorage
   };
 
   return (
-    <div className="min-h-screen bg-gray-50">
-      <Form
-        onSubmit={submitHandler}
-        selectedUser={selectedUser}
-        isEditMode={isEditMode}
-        onUpdate={updateUser}
-      />
+    <div className="min-h-screen bg-[#1c1c1c] text-white p-5">
+      <Form onSubmit={addUser} />
       <UserList users={users} deleteUser={deleteUser} editUser={editUser} />
     </div>
   );

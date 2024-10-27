@@ -3,7 +3,7 @@ import UserCard from "./UserCard";
 
 const UserList = ({ users, deleteUser, editUser }) => {
   return (
-    <div className="p-7 bg-slate-100 flex flex-wrap justify-center">
+    <div className="p-7 bg-[#252525] rounded-lg flex flex-wrap justify-center">
       {users.length > 0 ? (
         users.map((user, idx) => (
           <UserCard
